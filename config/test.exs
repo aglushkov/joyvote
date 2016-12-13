@@ -17,3 +17,12 @@ config :joyvote, Joyvote.Repo,
   database: "joyvote_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "Joyvote",
+  ttl: { 30, :days },
+  verify_issuer: true, # optional
+  secret_key: %{"k" => "UW8mE4w32oRAGfqcv5kh1w", "kty" => "oct"},
+  serializer: Joyvote.GuardianSerializer

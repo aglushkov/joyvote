@@ -41,3 +41,12 @@ config :joyvote, Joyvote.Repo,
   database: "joyvote_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "Joyvote",
+  ttl: { 30, :days },
+  verify_issuer: true, # optional
+  secret_key: %{"k" => "aH8im8-BIgwxeLHEmONyUA", "kty" => "oct"},
+  serializer: Joyvote.GuardianSerializer

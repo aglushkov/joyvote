@@ -1,5 +1,9 @@
 defmodule Joyvote.UserController do
   use Joyvote.Web, :controller
+  # plug Guardian.Plug.EnsureAuthenticated,
+  #   %{
+  #     on_failure: { PhoenixGuardian.SessionController, :new }
+  #   } when not action in [:new, :create]
 
   alias Joyvote.User
 
