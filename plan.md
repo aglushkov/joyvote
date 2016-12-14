@@ -4,6 +4,7 @@ Elixir:
   Functions ARITY
   SPLAT OPERATOR
   conditions with :ok, :error (switch case)
+  func_name(a // 2) - default paramter
 
 
 Plan:
