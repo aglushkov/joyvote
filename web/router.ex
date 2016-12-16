@@ -21,8 +21,12 @@ defmodule Joyvote.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/login", SessionController, :new
+    get "/logout", SessionController, :delete
+    get "/register", UserController, :new
+    post "/register", UserController, :create
 
-    resources "/users", UserController
+    resources "/users", UserController, except: [:new, :create]
   end
 
   # Other scopes may use custom stacks.

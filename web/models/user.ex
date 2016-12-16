@@ -4,6 +4,8 @@ defmodule Joyvote.User do
   schema "users" do
     field :name, :string
     field :email, :string
+    field :unconfirmed_email, :string
+    field :email_confirmed_at, :datetime
     field :encrypted_password, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
@@ -18,11 +20,22 @@ defmodule Joyvote.User do
   def changeset(struct, params \\ %{}) do
     required_params = [:name, :email, :password, :password_confirmation]
     struct
-    |> cast(params, required_params)
-    |> validate_required(required_params)
-    |> update_change(:email, &String.downcase/1)
-    |> unique_constraint(:email)
-    |> validate_confirmation(:password, :password_confirmation)
+      |> cast(params, required_params)
+      |> validate_required(required_params)
+      |> update_change(:email, &String.downcase/1)
+      |> unique_constraint(:email)
+      |> validate_confirmation(:password, :password_confirmation)
+  end
+
+
+  def create_changeset(struct, params \\ %{}) do
+    required_params = [:name, :unconfirmed_email, :password, :password_confirmation]
+    struct
+      |> cast(params, required_params)
+      |> validate_required(required_params)
+      |> update_change(:email, &String.downcase/1)
+      |> unique_constraint(:email)
+      |> validate_password_confirmed
   end
 
   def validate_password_confirmed(changeset) do
